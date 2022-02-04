@@ -1,4 +1,19 @@
+main {
+    text-align: center;
+}
+
+div.form-and-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+div.form-and-list > * {
+    flex-basis: 30%;
+}
+
 div.todo-card {
     border: 0.5rem solid black;
     margin-bottom: 1rem;
+    padding: 1rem;
 }

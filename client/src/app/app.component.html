@@ -1,17 +1,26 @@
-<h1>{{getGreeting()}}</h1>
+<header>
+    <nav></nav>
+</header>
+<main>
+    <section>
+        <h1>{{getGreeting()}}</h1>
+    </section>
+    <div class="form-and-list">
+        <app-add-todo-form></app-add-todo-form>
+        <section>
+            <h2>All todos:</h2>
+            <div *ngFor="let todo of getTodos()">
 
-<app-add-todo-form></app-add-todo-form>
+                <div class="todo-card">
+                    <h4>Title:{{todo.title}} (ID :{{todo.id}})</h4>
+                    <h4>Content: </h4>
+                    <p>{{todo.content}}</p>
+                    <button (click)="deleteTodo(todo.id)">Delete</button>
+                </div>
 
-<section>
-    <h2>All todos:</h2>
-    <div *ngFor="let todo of getTodos()">
-
-        <div class="todo-card">
-            <h4>Title:{{todo.title}} (ID :{{todo.id}})</h4>
-            <h4>Content: </h4>
-            <p>{{todo.content}}</p>
-            <button (click)="deleteTodo(todo.id)">Delete</button>
-        </div>
-
+            </div>
+        </section>
     </div>
-</section>
+
+</main>
+<footer></footer>
