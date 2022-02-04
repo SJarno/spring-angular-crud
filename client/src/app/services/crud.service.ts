@@ -11,6 +11,12 @@ export class CrudService {
   constructor(private http: HttpClient) { }
 
   getGreeting(): Observable<any> {
-    return this.http.get(this.url+"api/greet");
+    return this.http.get(this.url+"api/greet", { observe: 'response'});
+  }
+  getAllTodos(): Observable<any> {
+    return this.http.get(this.url+"api/todos", { observe: 'response'});
+  }
+  saveNewTodo(todo : any): Observable<any> {
+    return this.http.post(this.url+"api/add-todo", todo, { observe: 'response'});
   }
 }
