@@ -1,4 +1,6 @@
 # Spring-Angular-Crud
+![Github Actions](https://github.com/SJarno/spring-angular-crud/actions/workflows/maven.yml/badge.svg)
+
 Some basic crud operations with Spring Boot and Angular, main focus with tests, json and Spring Security.
 
 ## About
