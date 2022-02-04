@@ -1,6 +1,8 @@
 package com.sjarno.springangularcrud.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -28,8 +30,10 @@ public class TodoController {
 
     /* Basically just for quick testing */
     @GetMapping("/greet")
-    public String greeting() {
-        return "Heippa maailma!";
+    public Map<String, String> greeting() {
+        Map<String, String> greet = new HashMap<>();
+        greet.put("greet", "Hello, this is a greeting from the server!");
+        return greet;
     }
 
     @PostMapping("/add-todo")
