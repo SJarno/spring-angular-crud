@@ -8,8 +8,14 @@ import com.sjarno.springangularcrud.models.Todo;
 import com.sjarno.springangularcrud.repository.TodoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,13 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoController {
 
     @Autowired
-    private TodoRepository todoRepository;
+    private TodoRepository todoRepository;    
 
     /* Basically just for quick testing */
     @GetMapping("/greet")
     public String greeting() {
         return "Heippa maailma!";
     }
+
+    @PostMapping("/add-todo")
+    public Todo addTodo(@RequestBody Todo todo) {
+        return this.todoRepository.save(todo);
+    }
+
     @GetMapping("/todos")
     public List<Todo> allTodos() {
         return this.todoRepository.findAll();
@@ -33,11 +45,21 @@ public class TodoController {
     public Todo getTodoById(@PathVariable Long id) {
         return this.todoRepository.findById(id).get();
     }
+    @Transactional
+    @PutMapping("/update/{id}")
+    public Todo updateTodoByid(@PathVariable Long id, @RequestBody Todo todo) {
+        Todo foundTodo = this.todoRepository.findById(id).get();
+        foundTodo.setTitle(todo.getTitle());
+        foundTodo.setContent(todo.getContent());
+        return foundTodo;
+    }
 
-    @PostConstruct
-    private void setUp() {
-        this.todoRepository.deleteAll();
-        this.todoRepository.save(new Todo("Title", "Content"));
+    @DeleteMapping("/delete/{id}")
+    public Todo deleteTodoByid(@PathVariable Long id) {
+        Todo todoTodDelete = this.todoRepository.findById(id).get();
+        this.todoRepository.delete(todoTodDelete);
+
+        return todoTodDelete;
     }
     
 }
