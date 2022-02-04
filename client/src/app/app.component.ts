@@ -28,5 +28,8 @@ export class AppComponent {
   deleteTodo(id: number) {
     this.dataService.deleteTodo(id);
   }
+  toggleModify(event: any) {
+    console.log(event);
+  }
 
 }

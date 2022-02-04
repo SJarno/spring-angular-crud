@@ -1,11 +1,21 @@
 main {
     text-align: center;
+   /*  margin: 0rem 1rem; */
+    background-color: rgb(121, 110, 110);
+    min-height: 100rem;
+}
+
+header {
+   /*  background-color: rgb(49, 45, 45); */
+    color: antiquewhite;
 }
 
 div.form-and-list {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    
 }
 
 div.form-and-list > * {
@@ -13,7 +23,17 @@ div.form-and-list > * {
 }
 
 div.todo-card {
-    border: 0.5rem solid black;
+    border: 0.125rem solid black;
     margin-bottom: 1rem;
     padding: 1rem;
+    background-color: gainsboro;
+}
+
+h2 {
+    background-color: beige;
+}
+
+footer {
+    /* background-color: rgb(49, 45, 45); */
+    color: antiquewhite;
 }

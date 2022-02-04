@@ -29,3 +29,7 @@ p, input, label, textarea, button {
 ul, li {
     text-decoration: none;
 }
+
+body {
+    background-color: rgb(68, 63, 63);
+}

@@ -19,7 +19,7 @@ export class DataServiceService {
   getGreeting() {
     this.crudService.getGreeting().subscribe(response => {
       console.log("Koko vastaus: ");
-      console.log(response)
+      console.log(response);
       console.log("Otsakkeet/avaimet: " + response.headers.keys());
       console.log("Status: " + response.status);
       console.log("Body: ");
@@ -64,4 +64,5 @@ export class DataServiceService {
 
     });
   }
+  
 }
