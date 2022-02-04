@@ -1,0 +1,35 @@
+<section class="save-todo-form">
+    <form (ngSubmit)="saveNewTodo()" #userForm="ngForm">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <h1>Add new todo!</h1>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><label for="title">Title:</label></td>
+                    <td>
+                        <input type="text" [(ngModel)]="todo.title" name="title" id="title" required #title="ngModel">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="content">Content:</label></td>
+                    <td>
+                        <textarea name="content" [(ngModel)]="todo.content" 
+                            id="content" cols="20" rows="3" 
+                            required #content>
+                        </textarea>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><button type="submit">Add todo</button></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</section>

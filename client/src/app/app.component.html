@@ -1,20 +1,17 @@
-<h1>{{greeting}}</h1>
-<h2>All todos:</h2>
-<ul *ngFor="let todo of todos">
-    <li>{{todo.title}}</li>
-</ul>
+<h1>{{getGreeting()}}</h1>
+
+<app-add-todo-form></app-add-todo-form>
+
 <section>
-    <form (ngSubmit)="saveNewTodo()" #userForm="ngForm">
-        <label for="title">Title:</label>
-        <input type="text" [(ngModel)]="todo.title" 
-            name="title" 
-            id="title" 
-            required #title="ngModel"><br>
-        <label for="content">Content:</label>
-        <input type="text" [(ngModel)]="todo.content" 
-            name="content" 
-            id="content" 
-            required #content><br>
-        <button type="submit">Add todo</button>
-    </form>
+    <h2>All todos:</h2>
+    <div *ngFor="let todo of getTodos()">
+
+        <div class="todo-card">
+            <h4>Title:{{todo.title}} (ID :{{todo.id}})</h4>
+            <h4>Content: </h4>
+            <p>{{todo.content}}</p>
+            <button (click)="deleteTodo(todo.id)">Delete</button>
+        </div>
+
+    </div>
 </section>

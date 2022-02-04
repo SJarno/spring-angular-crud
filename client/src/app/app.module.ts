@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { AddTodoFormComponent } from './add-todo-form/add-todo-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AddTodoFormComponent
   ],
   imports: [
     BrowserModule,

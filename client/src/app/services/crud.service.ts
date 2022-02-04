@@ -19,4 +19,10 @@ export class CrudService {
   saveNewTodo(todo : any): Observable<any> {
     return this.http.post(this.url+"api/add-todo", todo, { observe: 'response'});
   }
+  /* updateTodo(todo: any): Observable<any> {
+    return "";
+  } */
+  deleteTodoById(id : number): Observable<any> {
+    return this.http.delete(this.url+"api/delete/"+id, {observe: 'response'});
+  }
 }
