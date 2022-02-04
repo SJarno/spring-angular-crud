@@ -23,8 +23,8 @@ public class TodoControllerTest {
 
     @Test
     void testGreeting() throws Exception {
-        MvcResult result =this.mockMvc.perform(get("/api/greet"))
-            .andExpect(status().isOk()).andReturn();
+        MvcResult result = this.mockMvc.perform(get("/api/greet"))
+                .andExpect(status().isOk()).andReturn();
         assertEquals("Heippa maailma!", result.getResponse().getContentAsString());
     }
 }
