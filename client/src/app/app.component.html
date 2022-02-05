@@ -9,16 +9,34 @@
     </section>
     <div class="form-and-list">
         <app-add-todo-form></app-add-todo-form>
+        <!-- Details section here -->
+        <section>
+            <div *ngIf="selectedTodo" class="todo-card">
+                <h2>{{selectedTodo.title}}</h2>
+                <label for="selected-title">Title: </label>
+                <input id="selected-title" [(ngModel)]="selectedTodo.title" placeholder="Title">
+                <p>{{selectedTodo.content}}</p>
+                <label for="selected-content">Content: </label>
+                <textarea id="selected-content" [(ngModel)]="selectedTodo.content" 
+                    placeholder="Content" cols="20" rows="3"></textarea>
+                <br>
+                <button (click)="updateTodo(selectedTodo, selectedTodo.id)">Update</button>
+                <br>
+                <button (click)="deleteTodo(selectedTodo.id)">Delete</button>
+            </div>
+        </section>
+        
+        <!-- Refactor listing to own component: -->
         <section>
             <h2>All todos:</h2>
             <div *ngFor="let todo of getTodos()">
-
+                <!-- Refactor to own component -->
                 <div class="todo-card">
                     <h4>Title:{{todo.title}} (ID :{{todo.id}})</h4>
                     <h4>Content: </h4>
                     <p>{{todo.content}}</p>
-                    <button (click)="toggleModify(this)">Modify</button>
-                    <button (click)="deleteTodo(todo.id)">Delete</button>
+                    <button (click)="toggleModify(todo)">Modify</button>
+                    
                 </div>
 
             </div>

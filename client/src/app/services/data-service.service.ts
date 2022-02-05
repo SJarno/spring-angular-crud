@@ -46,6 +46,12 @@ export class DataServiceService {
       this.todos = response.body;
     });
   }
+  updateTodo(todo: any, id: number) {
+    return this.crudService.updateTodo(todo, id).subscribe(response => {
+      console.log("Update");
+      console.log(response);
+    });
+  }
   deleteTodo(id: number) {
     this.crudService.deleteTodoById(id).subscribe(response => {
       console.log("Whole response");

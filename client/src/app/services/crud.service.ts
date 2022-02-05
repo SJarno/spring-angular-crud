@@ -11,18 +11,18 @@ export class CrudService {
   constructor(private http: HttpClient) { }
 
   getGreeting(): Observable<any> {
-    return this.http.get(this.url+"api/greet", { observe: 'response'});
+    return this.http.get(this.url + "api/greet", { observe: 'response' });
   }
   getAllTodos(): Observable<any> {
-    return this.http.get(this.url+"api/todos", { observe: 'response'});
+    return this.http.get(this.url + "api/todos", { observe: 'response' });
   }
-  saveNewTodo(todo : any): Observable<any> {
-    return this.http.post(this.url+"api/add-todo", todo, { observe: 'response'});
+  saveNewTodo(todo: any): Observable<any> {
+    return this.http.post(this.url + "api/add-todo", todo, { observe: 'response' });
   }
-  /* updateTodo(todo: any): Observable<any> {
-    return "";
-  } */
-  deleteTodoById(id : number): Observable<any> {
-    return this.http.delete(this.url+"api/delete/"+id, {observe: 'response'});
+  updateTodo(todo: any, id: number): Observable<any> {
+    return this.http.put(this.url + "api/update/" + id, todo, { observe: 'response' });
+  }
+  deleteTodoById(id: number): Observable<any> {
+    return this.http.delete(this.url + "api/delete/" + id, { observe: 'response' });
   }
 }
