@@ -1,9 +1,11 @@
 # Spring-Angular-Crud
 ![Github Actions](https://github.com/SJarno/spring-angular-crud/actions/workflows/maven.yml/badge.svg) [![codecov](https://codecov.io/gh/sjarno/spring-angular-crud/branch/main/graph/badge.svg?token=B7MGQ0IRJ7)](https://codecov.io/gh/sjarno/spring-angular-crud)
 
+Some basic crud operations with Spring Boot and Angular, main focus with tests, json and Spring Security.
+
 **Please note that this project is not to present front end skills and styling per se, but is to practice some basic elements. In other words: the app looks quite terrible.**
 
-Some basic crud operations with Spring Boot and Angular, main focus with tests, json and Spring Security.
+
 
 ## About
 Main objective is with combining Spring Security with Angular, and tests. 
