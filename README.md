@@ -20,9 +20,19 @@ Spring Boot
 - Tests
 - Spring Security
     with in-mem user
-- Tests with Spring Security
+- Tests with Spring Security(see below).
 
 ### Front end
 Angular
 - CRUD operations
 - With authentication
+
+### Security
+Spring Security
+- Basic authentication w/http basic
+- In mem user
+- User account with userdetails
+- Tests with security context
+
+## Other
+Please send me and email, if you wish to collaboreate, and be nice, and do the same if you fork this. :)
