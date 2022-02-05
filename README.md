@@ -8,6 +8,8 @@ Some basic crud operations with Spring Boot and Angular, main focus with tests, 
 ## About
 Main objective is with combining Spring Security with Angular, and tests. 
 
+User can add new todos with title and content, get them as as list, modify them and delete. So basic crud yes :)
+
 For futere reference.
 
 ## Road map
