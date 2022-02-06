@@ -27,10 +27,6 @@ export class DataServiceService {
       console.log(response.body);
       console.log("Tervehdys: " + response.body.greet);
       this.greeting = response.body.greet;
-      if (response.status === 200) {
-        this.messageService.add("Tervehdys lisätty");
-      } 
-      
 
     });
   }
@@ -41,10 +37,8 @@ export class DataServiceService {
       console.log("Body");
       console.log(response.body);
       this.todos.push(response.body);
-      if (response.status === 200) {
-        this.messageService.add("Tallennettu!");
-      }
-      
+
+
     });
   }
   getTodos() {
@@ -52,9 +46,7 @@ export class DataServiceService {
       console.log("Get all todos, whole response: ");
       console.log(response.status);
       this.todos = response.body;
-      if (response.status === 200) {
-        this.messageService.add("Todot kaikki haettu");
-      }
+
     });
   }
   updateTodo(todo: any, id: number) {
@@ -62,7 +54,6 @@ export class DataServiceService {
       console.log("Update");
       console.log(response);
       this.selectedTodo = "";
-      this.messageService.add("Updated");
     });
   }
   deleteTodo(id: number) {
@@ -73,7 +64,7 @@ export class DataServiceService {
       console.log(response.body);
       this.removeFromArrayById(id);
       this.selectedTodo = "";
-      this.messageService.add("Deleted");
+      
     });
   }
   removeFromArrayById(id: number) {
