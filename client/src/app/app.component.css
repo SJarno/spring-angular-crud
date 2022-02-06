@@ -9,6 +9,9 @@ header {
    /*  background-color: rgb(49, 45, 45); */
     color: antiquewhite;
 }
+nav {
+    text-align: center;
+}
 
 div.form-and-list {
     display: flex;
@@ -21,7 +24,7 @@ div.form-and-list {
 div.form-and-list > * {
     flex-basis: 30%;
 }
-
+/* Details section: */
 div.todo-card {
     border: 0.125rem solid black;
     margin-bottom: 1rem;
@@ -30,7 +33,7 @@ div.todo-card {
 }
 
 h2 {
-    background-color: beige;
+    /* background-color: beige; */
 }
 
 footer {

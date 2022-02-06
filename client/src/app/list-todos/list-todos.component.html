@@ -1,0 +1,12 @@
+<section>
+    <h2>All todos:</h2>
+    <div *ngFor="let todo of getTodos()">
+        <!-- Refactor to own component -->
+        <div class="todo-card">
+            <h4>Title:{{todo.title}} (ID :{{todo.id}})</h4>
+            <h4>Content: </h4>
+            <p>{{todo.content}}</p>
+            <button (click)="toggleModify(todo)">Modify</button>
+        </div>
+    </div>
+</section>

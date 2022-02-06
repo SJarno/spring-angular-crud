@@ -19,7 +19,7 @@ export class AddTodoFormComponent implements OnInit {
   }
   saveNewTodo() {
     this.dataService.saveNewTodo(this.todo);
-    this.todo = { title: "", content: "" };
+    this.todo = { title: "", content: "" };//clears selection
   }
 
 }

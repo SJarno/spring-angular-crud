@@ -8,6 +8,8 @@ export class DataServiceService {
   greeting = "Moi";
   todos: any = [];
   todo!: any;
+  selectedTodo?: any;
+
   constructor(private crudService: CrudService) {
     this.getGreeting();
     this.getTodos();
@@ -29,14 +31,13 @@ export class DataServiceService {
 
     });
   }
-  saveNewTodo(todo : any) {
+  saveNewTodo(todo: any) {
     this.crudService.saveNewTodo(todo).subscribe(response => {
       console.log("Whole response")
       console.log(response);
       console.log("Body");
       console.log(response.body);
       this.todos.push(response.body);
-      //this.todo = { title: "", content: "" };
     });
   }
   getTodos() {
@@ -50,6 +51,7 @@ export class DataServiceService {
     return this.crudService.updateTodo(todo, id).subscribe(response => {
       console.log("Update");
       console.log(response);
+      this.selectedTodo = "";
     });
   }
   deleteTodo(id: number) {
@@ -59,6 +61,7 @@ export class DataServiceService {
       console.log("Body");
       console.log(response.body);
       this.removeFromArrayById(id);
+      this.selectedTodo = "";
     });
   }
   removeFromArrayById(id: number) {
@@ -70,5 +73,11 @@ export class DataServiceService {
 
     });
   }
-  
+  toggleSelectedTodo(todo: any) {
+    this.selectedTodo = todo;
+  }
+  getSelectedTodo() {
+    return this.selectedTodo;
+  }
+
 }

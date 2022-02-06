@@ -1,0 +1,16 @@
+<section>
+    <h2>Modify</h2>
+    <div *ngIf="getSelectedTodo()" class="todo-card">
+        <h2>{{getSelectedTodo().title}}</h2>
+        <label for="selected-title">Title: </label>
+        <input id="selected-title" [(ngModel)]="getSelectedTodo().title" placeholder="Title">
+        <p>{{getSelectedTodo().content}}</p>
+        <label for="selected-content">Content: </label>
+        <textarea id="selected-content" [(ngModel)]="getSelectedTodo().content" placeholder="Content" cols="20"
+            rows="3"></textarea>
+        <br>
+        <button (click)="updateTodo(getSelectedTodo(), getSelectedTodo().id)">Update</button>
+        <br>
+        <button (click)="deleteTodo(getSelectedTodo().id)">Delete</button>
+    </div>
+</section>

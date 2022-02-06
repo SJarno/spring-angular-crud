@@ -7,11 +7,16 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AddTodoFormComponent } from './add-todo-form/add-todo-form.component';
+import { ListTodosComponent } from './list-todos/list-todos.component';
+import { ModifyTodoComponent } from './modify-todo/modify-todo.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddTodoFormComponent
+    AddTodoFormComponent,
+    ListTodosComponent,
+    ModifyTodoComponent
   ],
   imports: [
     BrowserModule,
