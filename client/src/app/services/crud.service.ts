@@ -13,19 +13,28 @@ export class CrudService {
 
   getGreeting(): Observable<any> {
     return this.http.get(this.url + "api/greet", { observe: 'response' })
-      .pipe(catchError(this.handleError<any>('getGreeting', [])));
+      .pipe(catchError(this.handleError<any>('getGreeting', []))
+      );
   }
   getAllTodos(): Observable<any> {
-    return this.http.get(this.url + "api/todos", { observe: 'response' });
+    return this.http.get(this.url + "api/todos", { observe: 'response' })
+    .pipe(catchError(this.handleError<any>('getAllTodos', []))
+    );
   }
   saveNewTodo(todo: any): Observable<any> {
-    return this.http.post(this.url + "api/add-todo", todo, { observe: 'response' });
+    return this.http.post(this.url + "api/add-todo", todo, { observe: 'response' })
+    .pipe(catchError(this.handleError<any>('saveNewTodo', []))
+    );
   }
   updateTodo(todo: any, id: number): Observable<any> {
-    return this.http.put(this.url + "api/update/" + id, todo, { observe: 'response' });
+    return this.http.put(this.url + "api/update/" + id, todo, { observe: 'response' })
+    .pipe(catchError(this.handleError<any>('updateTodo', []))
+    );
   }
   deleteTodoById(id: number): Observable<any> {
-    return this.http.delete(this.url + "api/delete/" + id, { observe: 'response' });
+    return this.http.delete(this.url + "api/delete/" + id, { observe: 'response' })
+    .pipe(catchError(this.handleError<any>('deleteTodoById', []))
+    );
   }
   /**
  * Handle Http operation that failed.
