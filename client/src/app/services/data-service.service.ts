@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MessageService } from './message.service';
 import { CrudService } from './crud.service';
 
 @Injectable({
@@ -10,13 +11,11 @@ export class DataServiceService {
   todo!: any;
   selectedTodo?: any;
 
-  constructor(private crudService: CrudService) {
-    this.getGreeting();
-    this.getTodos();
+  constructor(private crudService: CrudService, private messageService: MessageService) {
+    //bet practice is keep constructor minimal
     this.todo = { title: "", content: "" };
 
   }
-
 
   getGreeting() {
     this.crudService.getGreeting().subscribe(response => {
@@ -28,6 +27,10 @@ export class DataServiceService {
       console.log(response.body);
       console.log("Tervehdys: " + response.body.greet);
       this.greeting = response.body.greet;
+      if (response.status === 200) {
+        this.messageService.add("Tervehdys lisätty");
+      } 
+      
 
     });
   }
@@ -38,13 +41,20 @@ export class DataServiceService {
       console.log("Body");
       console.log(response.body);
       this.todos.push(response.body);
+      if (response.status === 200) {
+        this.messageService.add("Tallennettu!");
+      }
+      
     });
   }
   getTodos() {
     this.crudService.getAllTodos().subscribe(response => {
       console.log("Get all todos, whole response: ");
-      console.log(response);
+      console.log(response.status);
       this.todos = response.body;
+      if (response.status === 200) {
+        this.messageService.add("Todot kaikki haettu");
+      }
     });
   }
   updateTodo(todo: any, id: number) {
@@ -52,6 +62,7 @@ export class DataServiceService {
       console.log("Update");
       console.log(response);
       this.selectedTodo = "";
+      this.messageService.add("Updated");
     });
   }
   deleteTodo(id: number) {
@@ -62,6 +73,7 @@ export class DataServiceService {
       console.log(response.body);
       this.removeFromArrayById(id);
       this.selectedTodo = "";
+      this.messageService.add("Deleted");
     });
   }
   removeFromArrayById(id: number) {

@@ -1,0 +1,24 @@
+div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+div>* {
+    flex-basis: 51%;
+}
+
+div.message {
+    /* width: 30%; */
+    background-color: rgb(35, 165, 57);
+    color: antiquewhite;
+    text-align: center;
+}
+
+div.error {
+    background-color: rgb(200, 36, 50);
+    color: antiquewhite;
+    text-align: center;
+}

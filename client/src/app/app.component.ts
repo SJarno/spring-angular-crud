@@ -14,6 +14,9 @@ export class AppComponent {
 
   }
   ngOnInit() {
+    //Call methods on init, best practice
+    this.dataService.getGreeting();
+    this.dataService.getTodos();
   }
   getGreeting() {
     return this.dataService.greeting;
