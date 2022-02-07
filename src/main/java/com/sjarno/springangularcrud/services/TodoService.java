@@ -20,8 +20,8 @@ public class TodoService {
         return this.todoRepository.save(todo);
     }
     private boolean validateTodo(Todo todo) {
-        if (todo.getTitle() == null || todo.getContent() == null) {
-            throw new IllegalArgumentException("Values cannot be null");
+        if (todo == null || todo.getTitle() == null || todo.getContent() == null ) {
+            throw new NullPointerException("Values cannot be null");
         }
         if (todo.getTitle().isBlank()) {
             throw new IllegalArgumentException("Title cannot be empty");

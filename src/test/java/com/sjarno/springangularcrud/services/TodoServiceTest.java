@@ -47,7 +47,12 @@ public class TodoServiceTest {
 
     @Test
     void testWrongValuesThrowsError() {
-        Exception nullValuesError = assertThrows(IllegalArgumentException.class, () -> {
+        Exception nullObjectError = assertThrows(NullPointerException.class, () -> {
+            todoService.createTodo(null);
+        });
+        assertEquals("Values cannot be null", nullObjectError.getMessage());
+
+        Exception nullValuesError = assertThrows(NullPointerException.class, () -> {
             todoService.createTodo(todoNull);
         });
         assertEquals("Values cannot be null", nullValuesError.getMessage());
