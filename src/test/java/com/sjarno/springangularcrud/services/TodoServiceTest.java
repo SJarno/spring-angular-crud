@@ -1,6 +1,7 @@
 package com.sjarno.springangularcrud.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.sjarno.springangularcrud.models.Todo;
@@ -43,6 +44,7 @@ public class TodoServiceTest {
         this.todoService.createTodo(todoWithValues);
         assertEquals(1, this.todoService.getAllTodos().size());
         assertEquals(this.todoWithValues, this.todoService.getAllTodos().get(0));
+        assertNotEquals(this.todoNull, this.todoService.getAllTodos().get(0));
     }
 
     @Test
