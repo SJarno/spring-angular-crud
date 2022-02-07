@@ -80,7 +80,7 @@
 					<excludes>
 						<!-- skipataan app-tiedosto -->
 						<exclude>**/*SpringAngularCrudApplication.*</exclude>
-						<!-- <exclude>**/*security/*</exclude> -->
+						<exclude>**/*DevSecurityConfiguration.*</exclude>
 					</excludes>
 				</configuration>
 

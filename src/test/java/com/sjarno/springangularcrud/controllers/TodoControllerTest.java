@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sjarno.springangularcrud.models.Todo;
 import com.sjarno.springangularcrud.repository.TodoRepository;
@@ -155,12 +156,23 @@ public class TodoControllerTest {
     }
 
     @Test
+    void wrongValuesThrowsErrorWhenUpdating() throws JsonProcessingException, Exception {
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.put("/api/update/2")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(todoWithNullVals)))
+            .andExpect(status().isUnprocessableEntity()).andReturn();
+        assertEquals("Values cannot be null", result.getResponse().getContentAsString());
+        assertEquals(3, this.todoRepository.findAll().size());
+    }
+
+    @Test
     void canDeleteTodoById() throws Exception {
         MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/delete/{id}", 2))
                 .andExpect(status().isOk()).andReturn();
         String jsonContent = "{\"id\":2,\"title\":\"TitleTwo\",\"content\":\"ContentTwo\",\"new\":false}";
         assertEquals(jsonContent, result.getResponse().getContentAsString());
         assertEquals(2, this.todoRepository.findAll().size());
+        
     }
 
     @Test
