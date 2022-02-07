@@ -46,23 +46,21 @@ export class CrudService {
         catchError(this.handleError<any>('deleteTodoById', []))
     );
   }
-  /**
- * Handle Http operation that failed.
- * Let the app continue.
- *
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
+  
 private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
 
-    // TODO: send the error to remote logging infrastructure
-    console.error(error); // log to console instead
+    // Prin the error on console:
+    console.error("An error occured: "+error.error); // log to console instead
 
-    // TODO: better job of transforming error for user consumption
-    this.messagesService.addErrorMessage(`${operation} failed: ${error.message}`);
+    // Add message error to service for display:
+    // full error
+    //this.messagesService.addErrorMessage(`${operation} failed: ${error.message}`);
+    // message from backend:
+    this.messagesService.addErrorMessage(`${operation} ${error.error}`);
+    
 
-    // Let the app keep running by returning an empty result.
+    // Should return empty result:
     return of(result as T);
   };
 }

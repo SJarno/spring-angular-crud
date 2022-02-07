@@ -8,9 +8,12 @@ import javax.annotation.PostConstruct;
 
 import com.sjarno.springangularcrud.models.Todo;
 import com.sjarno.springangularcrud.repository.TodoRepository;
+import com.sjarno.springangularcrud.services.TodoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +31,9 @@ public class TodoController {
     @Autowired
     private TodoRepository todoRepository;    
 
+    @Autowired
+    private TodoService todoService;
+
     /* Basically just for quick testing */
     @GetMapping("/greet")
     public Map<String, String> greeting() {
@@ -37,13 +43,19 @@ public class TodoController {
     }
 
     @PostMapping("/add-todo")
-    public Todo addTodo(@RequestBody Todo todo) {
-        return this.todoRepository.save(todo);
+    public ResponseEntity<?> addTodo(@RequestBody Todo todo) {
+        try {
+            Todo createdTodo = this.todoService.createTodo(todo);
+            return new ResponseEntity<Todo>(createdTodo, HttpStatus.CREATED);
+        } catch (Exception e) {
+           return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        
     }
 
     @GetMapping("/todos")
     public List<Todo> allTodos() {
-        return this.todoRepository.findAll();
+        return this.todoService.getAllTodos();
     }
     @GetMapping("/todos/{id}")
     public Todo getTodoById(@PathVariable Long id) {

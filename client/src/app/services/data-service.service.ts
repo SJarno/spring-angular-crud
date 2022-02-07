@@ -32,11 +32,10 @@ export class DataServiceService {
   }
   saveNewTodo(todo: any) {
     this.crudService.saveNewTodo(todo).subscribe(response => {
-      console.log("Whole response")
-      console.log(response);
-      console.log("Body");
-      console.log(response.body);
-      this.todos.push(response.body);
+      // if http status is created, add response, else do nothing
+      if (response.status === 201) {
+        this.todos.push(response.body);
+      }
 
 
     });

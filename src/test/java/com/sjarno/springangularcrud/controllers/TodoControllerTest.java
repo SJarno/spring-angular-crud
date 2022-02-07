@@ -93,7 +93,7 @@ public class TodoControllerTest {
 
         Todo newTodo = new Todo("newTitle", "newContent");
         MvcResult result = addNewTodo(newTodo)
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
         String jsonContent = "{\"id\":4,\"title\":\"newTitle\",\"content\":\"newContent\",\"new\":false}";
         assertEquals(jsonContent, result.getResponse().getContentAsString());
@@ -101,8 +101,19 @@ public class TodoControllerTest {
     }
 
     /* Test errors here: */
-    void addNewTodoWithWrongValues() {
+    @Test
+    void addNewTodoWithWrongValues() throws Exception {
+        MvcResult resultNull = addNewTodo(todoWithNullVals)
+            .andExpect(status().isUnprocessableEntity()).andReturn();
+        assertEquals("Values cannot be null", resultNull.getResponse().getContentAsString());
 
+        MvcResult resultWithoutContent = addNewTodo(todoWithTitleOnly)
+            .andExpect(status().isUnprocessableEntity()).andReturn();
+        assertEquals("Content cannot be empty", resultWithoutContent.getResponse().getContentAsString());
+
+        MvcResult resultWitoutTitle = addNewTodo(todoWithContentOnly)
+            .andExpect(status().isUnprocessableEntity()).andReturn();
+        assertEquals("Title cannot be empty", resultWitoutTitle.getResponse().getContentAsString());
     }
 
     @Test
