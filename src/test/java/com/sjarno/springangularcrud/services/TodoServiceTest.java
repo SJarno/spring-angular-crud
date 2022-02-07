@@ -67,4 +67,18 @@ public class TodoServiceTest {
         });
         assertEquals("Title cannot be empty", withoutTitleError.getMessage());
     }
+
+    @Test
+    void testGetTodoById() throws Exception {
+        this.todoService.createTodo(todoWithValues);
+        Todo foundTodo = this.todoService.findTodoWithId(1L);
+        assertEquals(todoWithValues, foundTodo);
+    }
+    @Test
+    void testGetTodoWithWronIdThrowsError() {
+        Exception wrongIdError = assertThrows(Exception.class, () -> {
+            this.todoService.findTodoWithId(2L);
+        });
+        assertEquals("Not found", wrongIdError.getMessage());
+    }
 }

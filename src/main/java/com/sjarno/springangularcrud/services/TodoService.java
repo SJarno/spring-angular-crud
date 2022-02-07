@@ -35,7 +35,7 @@ public class TodoService {
     public List<Todo> getAllTodos() {
         return this.todoRepository.findAll();
     }
-    private Todo findTodoWithId(Long id) throws Exception {
+    public Todo findTodoWithId(Long id) throws Exception {
         Optional<Todo> found = this.todoRepository.findById(id);
         if (found.isPresent()) {
             return found.get();
