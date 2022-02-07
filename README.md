@@ -37,4 +37,4 @@ Spring Security
 - Tests with security context
 
 ## Other
-Please send me and email, if you wish to collaborate, and be nice, and do the same if you fork this. :)
+Please send me an email(jarno.saastamoinen@hotmail.com), if you wish to collaborate, and be nice, and do the same if you fork this. :)
