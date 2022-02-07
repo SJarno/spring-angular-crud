@@ -52,7 +52,13 @@ export class DataServiceService {
     return this.crudService.updateTodo(todo, id).subscribe(response => {
       console.log("Update");
       console.log(response);
-      this.selectedTodo = "";
+      if (response.status === 200) {
+        //clears todo from list, and adds the response from server
+        this.removeFromArrayById(id);
+        this.todos.push(response.body);
+        this.selectedTodo = ""; //clear selection
+      }
+      
     });
   }
   deleteTodo(id: number) {

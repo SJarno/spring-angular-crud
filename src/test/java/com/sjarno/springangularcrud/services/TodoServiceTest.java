@@ -48,11 +48,12 @@ public class TodoServiceTest {
     }
 
     @Test
-    void testWrongValuesThrowsError() {
+    void testWrongValuesThrowsErrorWhenCreatingTodo() {
         Exception nullObjectError = assertThrows(NullPointerException.class, () -> {
             todoService.createTodo(null);
         });
         assertEquals("Values cannot be null", nullObjectError.getMessage());
+        
 
         Exception nullValuesError = assertThrows(NullPointerException.class, () -> {
             todoService.createTodo(todoNull);
@@ -82,5 +83,46 @@ public class TodoServiceTest {
             this.todoService.findTodoWithId(2L);
         });
         assertEquals("Not found", wrongIdError.getMessage());
+        
     }
+    @Test
+    void testUpdateWithProperValues() throws Exception {
+        this.todoService.createTodo(todoWithValues);
+        Todo updatedVals = new Todo("TitleUpdated", "ContentUpdated");
+        this.todoService.updateTodo(updatedVals, 1L);
+        assertEquals(1, this.todoService.getAllTodos().size());
+        assertEquals(updatedVals, this.todoService.findTodoWithId(1L));
+        assertNotEquals(this.todoWithValues, this.todoService.findTodoWithId(1L));
+    }
+    @Test
+    void testWrongUpdateValuesThrowsError() {
+        this.todoService.createTodo(todoWithValues);
+        
+        Exception nullObjectError = assertThrows(NullPointerException.class, () -> {
+            this.todoService.updateTodo(null, 1L);
+        });
+        assertEquals("Values cannot be null", nullObjectError.getMessage());
+
+        Exception nullValuesError = assertThrows(NullPointerException.class, () -> {
+            this.todoService.updateTodo(todoNull, 1L);
+        });
+        assertEquals("Values cannot be null", nullValuesError.getMessage());
+
+        Exception withoutContentError = assertThrows(IllegalArgumentException.class, () -> {
+            this.todoService.updateTodo(todoWithTitle, 1L);
+        });
+        assertEquals("Content cannot be empty", withoutContentError.getMessage());
+
+        Exception withoutTitleError = assertThrows(IllegalArgumentException.class, () -> {
+            this.todoService.updateTodo(todoWithContent, 1L);
+        });
+        assertEquals("Title cannot be empty", withoutTitleError.getMessage());
+
+        Exception withWrongIdError = assertThrows(Exception.class, () -> {
+            this.todoService.updateTodo(todoWithContent, 2L);
+        });
+        assertEquals("Not found",withWrongIdError.getMessage());
+
+    }
+    
 }

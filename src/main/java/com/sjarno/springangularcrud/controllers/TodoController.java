@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoController {
 
     @Autowired
-    private TodoRepository todoRepository;    
+    private TodoRepository todoRepository;
 
     @Autowired
     private TodoService todoService;
@@ -48,26 +48,29 @@ public class TodoController {
             Todo createdTodo = this.todoService.createTodo(todo);
             return new ResponseEntity<Todo>(createdTodo, HttpStatus.CREATED);
         } catch (Exception e) {
-           return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        
+
     }
 
     @GetMapping("/todos")
     public List<Todo> allTodos() {
         return this.todoService.getAllTodos();
     }
+
     @GetMapping("/todos/{id}")
-    public Todo getTodoById(@PathVariable Long id) {
-        return this.todoRepository.findById(id).get();
+    public Todo getTodoById(@PathVariable Long id) throws Exception {
+        return this.todoService.findTodoWithId(id);
     }
-    @Transactional
+
     @PutMapping("/update/{id}")
-    public Todo updateTodoByid(@PathVariable Long id, @RequestBody Todo todo) {
-        Todo foundTodo = this.todoRepository.findById(id).get();
-        foundTodo.setTitle(todo.getTitle());
-        foundTodo.setContent(todo.getContent());
-        return foundTodo;
+    public ResponseEntity<?> updateTodoByid(@PathVariable Long id, @RequestBody Todo todo) {
+        try {
+            Todo updatedTodo = this.todoService.updateTodo(todo, id);
+            return new ResponseEntity<Todo>(updatedTodo, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
@@ -77,5 +80,5 @@ public class TodoController {
 
         return todoTodDelete;
     }
-    
+
 }

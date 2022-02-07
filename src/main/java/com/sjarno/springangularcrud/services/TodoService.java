@@ -8,6 +8,7 @@ import com.sjarno.springangularcrud.repository.TodoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TodoService {
@@ -41,6 +42,14 @@ public class TodoService {
             return found.get();
         }
         throw new Exception("Not found");
+    }
+    @Transactional
+    public Todo updateTodo(Todo todo, Long id) throws Exception {
+        Todo todoFound = this.findTodoWithId(id);
+        if (validateTodo(todo));
+        todoFound.setTitle(todo.getTitle());
+        todoFound.setContent(todo.getContent());
+        return this.todoRepository.save(todoFound);
     }
     
 }
