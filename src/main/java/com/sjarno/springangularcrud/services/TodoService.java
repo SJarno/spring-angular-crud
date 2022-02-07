@@ -37,6 +37,9 @@ public class TodoService {
         return this.todoRepository.findAll();
     }
     public Todo findTodoWithId(Long id) throws Exception {
+        if (id == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
         Optional<Todo> found = this.todoRepository.findById(id);
         if (found.isPresent()) {
             return found.get();
@@ -50,6 +53,12 @@ public class TodoService {
         todoFound.setTitle(todo.getTitle());
         todoFound.setContent(todo.getContent());
         return this.todoRepository.save(todoFound);
+    }
+    public Todo deleteTodoById(Long id) throws Exception {
+        Todo foundTodo = this.findTodoWithId(id);
+        this.todoRepository.deleteById(foundTodo.getId());
+        return foundTodo;
+        
     }
     
 }

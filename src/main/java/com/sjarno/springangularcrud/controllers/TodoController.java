@@ -74,11 +74,14 @@ public class TodoController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public Todo deleteTodoByid(@PathVariable Long id) {
-        Todo todoTodDelete = this.todoRepository.findById(id).get();
-        this.todoRepository.delete(todoTodDelete);
+    public ResponseEntity<?> deleteTodoByid(@PathVariable Long id) {
+        try {
+            Todo deletedTodo = this.todoService.deleteTodoById(id);
+            return new ResponseEntity<Todo>(deletedTodo, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
 
-        return todoTodDelete;
     }
 
 }

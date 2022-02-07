@@ -103,6 +103,8 @@ public class TodoControllerTest {
     /* Test errors here: */
     @Test
     void addNewTodoWithWrongValues() throws Exception {
+        
+
         MvcResult resultNull = addNewTodo(todoWithNullVals)
             .andExpect(status().isUnprocessableEntity()).andReturn();
         assertEquals("Values cannot be null", resultNull.getResponse().getContentAsString());
@@ -159,6 +161,16 @@ public class TodoControllerTest {
         String jsonContent = "{\"id\":2,\"title\":\"TitleTwo\",\"content\":\"ContentTwo\",\"new\":false}";
         assertEquals(jsonContent, result.getResponse().getContentAsString());
         assertEquals(2, this.todoRepository.findAll().size());
+    }
+
+    @Test
+    void wrongInputValueThrowsErrorWhenDeleting() throws Exception {
+        MvcResult resultWithWrondId = this.mockMvc.perform(
+            MockMvcRequestBuilders.delete("/api/delete/{id}", 99))
+            .andExpect(status().isUnprocessableEntity()).andReturn();
+        assertEquals("Not found", resultWithWrondId.getResponse().getContentAsString());
+        
+        /* Check for null id? */
     }
 
     private ResultActions addNewTodo(Todo todo) throws Exception {

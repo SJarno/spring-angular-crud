@@ -27,6 +27,8 @@ public class TodoServiceTest {
     private Todo todoWithTitle;
     private Todo todoWithContent;
 
+    private Todo todoWithValuesNotInDB;
+
     @BeforeEach
     void setUp() {
         this.todoWithValues = new Todo("title", "content");
@@ -35,6 +37,7 @@ public class TodoServiceTest {
         todoWithTitle.setTitle("TitleOnly");
         this.todoWithContent = new Todo("", "");
         todoWithContent.setContent("ContentOnly");
+        this.todoWithValuesNotInDB = new Todo("title", "content");
     }
 
 
@@ -123,6 +126,29 @@ public class TodoServiceTest {
         });
         assertEquals("Not found",withWrongIdError.getMessage());
 
+    }
+    @Test
+    void canDeleteTodoById() throws Exception {
+        this.todoService.createTodo(todoWithValues);
+        Todo deletedTodo = this.todoService.deleteTodoById(1L);
+        assertEquals(0, this.todoService.getAllTodos().size());
+        assertEquals(todoWithValues, deletedTodo);
+
+        //
+        assertNotEquals(todoWithValuesNotInDB.getId(), deletedTodo.getId());
+    }
+    @Test
+    void deletingWithNonExistingIdThrowsError() {
+        this.todoService.createTodo(todoWithValues);
+        Exception errorWithWrongId = assertThrows(Exception.class, () -> {
+            this.todoService.deleteTodoById(2L);
+        });
+        assertEquals("Not found", errorWithWrongId.getMessage());
+
+        Exception errorWitNullInput = assertThrows(IllegalArgumentException.class, () -> {
+            this.todoService.deleteTodoById(null);
+        });
+        assertEquals("Id cannot be null", errorWitNullInput.getMessage());
     }
     
 }
