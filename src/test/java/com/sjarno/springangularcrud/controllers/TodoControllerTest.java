@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.annotation.DirtiesContext;
@@ -78,6 +79,13 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithAnonymousUser
+    void testAnonymousUser() throws Exception {
+        this.mockMvc.perform(get("/api/greet"))
+            .andExpect(status().isFound());
+    }
+
+    @Test
     @WithMockUser
     void testGreeting() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/api/greet"))
@@ -100,7 +108,7 @@ public class TodoControllerTest {
         MvcResult result = addNewTodo(newTodo)
                 .andExpect(status().isCreated())
                 .andReturn();
-        String jsonContent = "{\"id\":4,\"title\":\"newTitle\",\"content\":\"newContent\",\"new\":false}";
+        String jsonContent = "{\"id\":5,\"title\":\"newTitle\",\"content\":\"newContent\",\"new\":false}";
         assertEquals(jsonContent, result.getResponse().getContentAsString());
         assertEquals(4, todoRepository.findAll().size());
     }
@@ -129,7 +137,7 @@ public class TodoControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*].id",
-                        containsInAnyOrder(1, 2, 3)))
+                        containsInAnyOrder(4, 2, 3)))
                 .andExpect(jsonPath("$[*].title",
                         containsInAnyOrder("TitleOne", "TitleTwo", "TitleThree")))
                 .andExpect(jsonPath("$[*].content",
@@ -142,9 +150,9 @@ public class TodoControllerTest {
     @Test
     @WithMockUser
     void testGetTodId() throws Exception {
-        MvcResult result = getTodoById(1, "TitleOne", "ContentOne")
+        MvcResult result = getTodoById(2, "TitleOne", "ContentOne")
                 .andExpect(status().isOk()).andReturn();
-        String content = "{\"id\":1,\"title\":\"TitleOne\",\"content\":\"ContentOne\",\"new\":false}";
+        String content = "{\"id\":2,\"title\":\"TitleOne\",\"content\":\"ContentOne\",\"new\":false}";
         assertEquals(content, result.getResponse().getContentAsString());
     }
 
@@ -152,12 +160,12 @@ public class TodoControllerTest {
     @WithMockUser
     void canUpdateTodo() throws Exception {
         Todo updatedValues = new Todo("TitleUpdated", "ContentUpdated");
-        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.put("/api/update/2")
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.put("/api/update/3")
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updatedValues)))
                 .andExpect(status().isOk()).andReturn();
-        String jsonContent = "{\"id\":2,\"title\":\"TitleUpdated\",\"content\":\"ContentUpdated\",\"new\":false}";
+        String jsonContent = "{\"id\":3,\"title\":\"TitleUpdated\",\"content\":\"ContentUpdated\",\"new\":false}";
         assertEquals(jsonContent, result.getResponse().getContentAsString());
         assertEquals(3, this.todoRepository.findAll().size());
     }
@@ -165,7 +173,7 @@ public class TodoControllerTest {
     @Test
     @WithMockUser
     void wrongValuesThrowsErrorWhenUpdating() throws JsonProcessingException, Exception {
-        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.put("/api/update/2")
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.put("/api/update/3")
             .with(SecurityMockMvcRequestPostProcessors.csrf())
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(todoWithNullVals)))
@@ -177,10 +185,10 @@ public class TodoControllerTest {
     @Test
     @WithMockUser
     void canDeleteTodoById() throws Exception {
-        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/delete/{id}", 2)
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/delete/{id}", 3)
                 .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isOk()).andReturn();
-        String jsonContent = "{\"id\":2,\"title\":\"TitleTwo\",\"content\":\"ContentTwo\",\"new\":false}";
+        String jsonContent = "{\"id\":3,\"title\":\"TitleTwo\",\"content\":\"ContentTwo\",\"new\":false}";
         assertEquals(jsonContent, result.getResponse().getContentAsString());
         assertEquals(2, this.todoRepository.findAll().size());
         

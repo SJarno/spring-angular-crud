@@ -77,13 +77,13 @@ public class TodoServiceTest {
     @Test
     void testGetTodoById() throws Exception {
         this.todoService.createTodo(todoWithValues);
-        Todo foundTodo = this.todoService.findTodoWithId(1L);
+        Todo foundTodo = this.todoService.findTodoWithId(2L);
         assertEquals(todoWithValues, foundTodo);
     }
     @Test
     void testGetTodoWithWronIdThrowsError() {
         Exception wrongIdError = assertThrows(Exception.class, () -> {
-            this.todoService.findTodoWithId(2L);
+            this.todoService.findTodoWithId(99L);
         });
         assertEquals("Not found", wrongIdError.getMessage());
         
@@ -92,37 +92,37 @@ public class TodoServiceTest {
     void testUpdateWithProperValues() throws Exception {
         this.todoService.createTodo(todoWithValues);
         Todo updatedVals = new Todo("TitleUpdated", "ContentUpdated");
-        this.todoService.updateTodo(updatedVals, 1L);
+        this.todoService.updateTodo(updatedVals, 2L);
         assertEquals(1, this.todoService.getAllTodos().size());
-        assertEquals(updatedVals, this.todoService.findTodoWithId(1L));
-        assertNotEquals(this.todoWithValues, this.todoService.findTodoWithId(1L));
+        assertEquals(updatedVals, this.todoService.findTodoWithId(2L));
+        assertNotEquals(this.todoWithValues, this.todoService.findTodoWithId(2L));
     }
     @Test
     void testWrongUpdateValuesThrowsError() {
         this.todoService.createTodo(todoWithValues);
         
         Exception nullObjectError = assertThrows(NullPointerException.class, () -> {
-            this.todoService.updateTodo(null, 1L);
+            this.todoService.updateTodo(null, 2L);
         });
         assertEquals("Values cannot be null", nullObjectError.getMessage());
 
         Exception nullValuesError = assertThrows(NullPointerException.class, () -> {
-            this.todoService.updateTodo(todoNull, 1L);
+            this.todoService.updateTodo(todoNull, 2L);
         });
         assertEquals("Values cannot be null", nullValuesError.getMessage());
 
         Exception withoutContentError = assertThrows(IllegalArgumentException.class, () -> {
-            this.todoService.updateTodo(todoWithTitle, 1L);
+            this.todoService.updateTodo(todoWithTitle, 2L);
         });
         assertEquals("Content cannot be empty", withoutContentError.getMessage());
 
         Exception withoutTitleError = assertThrows(IllegalArgumentException.class, () -> {
-            this.todoService.updateTodo(todoWithContent, 1L);
+            this.todoService.updateTodo(todoWithContent, 2L);
         });
         assertEquals("Title cannot be empty", withoutTitleError.getMessage());
 
         Exception withWrongIdError = assertThrows(Exception.class, () -> {
-            this.todoService.updateTodo(todoWithContent, 2L);
+            this.todoService.updateTodo(todoWithContent, 54L);
         });
         assertEquals("Not found",withWrongIdError.getMessage());
 
@@ -130,7 +130,7 @@ public class TodoServiceTest {
     @Test
     void canDeleteTodoById() throws Exception {
         this.todoService.createTodo(todoWithValues);
-        Todo deletedTodo = this.todoService.deleteTodoById(1L);
+        Todo deletedTodo = this.todoService.deleteTodoById(2L);
         assertEquals(0, this.todoService.getAllTodos().size());
         assertEquals(todoWithValues, deletedTodo);
 
@@ -141,7 +141,7 @@ public class TodoServiceTest {
     void deletingWithNonExistingIdThrowsError() {
         this.todoService.createTodo(todoWithValues);
         Exception errorWithWrongId = assertThrows(Exception.class, () -> {
-            this.todoService.deleteTodoById(2L);
+            this.todoService.deleteTodoById(41L);
         });
         assertEquals("Not found", errorWithWrongId.getMessage());
 

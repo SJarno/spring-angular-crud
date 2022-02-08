@@ -15,4 +15,8 @@ import lombok.NoArgsConstructor;
 public class Todo extends AbstractPersistable<Long> {
     private String title;
     private String content;
+
+    
+
+    
 }

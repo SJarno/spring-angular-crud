@@ -1,5 +1,7 @@
 package com.sjarno.springangularcrud.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,13 +9,15 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import com.sjarno.springangularcrud.models.Todo;
+import com.sjarno.springangularcrud.models.UserAccount;
 import com.sjarno.springangularcrud.repository.TodoRepository;
+import com.sjarno.springangularcrud.repository.UserAccountRepository;
 import com.sjarno.springangularcrud.services.TodoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class TodoController {
 
+    @Autowired
+    private UserAccountRepository userAccountRepository;
 
     @Autowired
     private TodoService todoService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /* Basically just for quick testing */
     @GetMapping("/greet")
@@ -80,6 +89,17 @@ public class TodoController {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
+    }
+    /* UserAccount userAccount = new UserAccount(username, password, roles); */
+    @PostConstruct
+    public void init() {
+        UserAccount userAccount = new UserAccount(
+            "user", 
+            passwordEncoder.encode("pass"), 
+            new ArrayList<>(Arrays.asList("ROLE_USER")));
+        userAccountRepository.deleteAll();
+        userAccountRepository.save(userAccount);
+        
     }
 
 }
