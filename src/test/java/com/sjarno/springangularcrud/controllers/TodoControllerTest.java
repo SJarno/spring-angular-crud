@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
@@ -76,6 +78,7 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithMockUser
     void testGreeting() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/api/greet"))
                 .andExpect(status().isOk()).andReturn();
@@ -90,6 +93,7 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithMockUser
     void testAddingNewTodo() throws Exception {
 
         Todo newTodo = new Todo("newTitle", "newContent");
@@ -103,9 +107,8 @@ public class TodoControllerTest {
 
     /* Test errors here: */
     @Test
+    @WithMockUser
     void addNewTodoWithWrongValues() throws Exception {
-        
-
         MvcResult resultNull = addNewTodo(todoWithNullVals)
             .andExpect(status().isUnprocessableEntity()).andReturn();
         assertEquals("Values cannot be null", resultNull.getResponse().getContentAsString());
@@ -120,6 +123,7 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithMockUser
     void testAllTodos() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/api/todos"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -136,6 +140,7 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithMockUser
     void testGetTodId() throws Exception {
         MvcResult result = getTodoById(1, "TitleOne", "ContentOne")
                 .andExpect(status().isOk()).andReturn();
@@ -144,9 +149,11 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithMockUser
     void canUpdateTodo() throws Exception {
         Todo updatedValues = new Todo("TitleUpdated", "ContentUpdated");
         MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.put("/api/update/2")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updatedValues)))
                 .andExpect(status().isOk()).andReturn();
@@ -156,8 +163,10 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithMockUser
     void wrongValuesThrowsErrorWhenUpdating() throws JsonProcessingException, Exception {
         MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.put("/api/update/2")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(objectMapper.writeValueAsString(todoWithNullVals)))
             .andExpect(status().isUnprocessableEntity()).andReturn();
@@ -166,8 +175,10 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithMockUser
     void canDeleteTodoById() throws Exception {
-        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/delete/{id}", 2))
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/delete/{id}", 2)
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isOk()).andReturn();
         String jsonContent = "{\"id\":2,\"title\":\"TitleTwo\",\"content\":\"ContentTwo\",\"new\":false}";
         assertEquals(jsonContent, result.getResponse().getContentAsString());
@@ -176,9 +187,11 @@ public class TodoControllerTest {
     }
 
     @Test
+    @WithMockUser
     void wrongInputValueThrowsErrorWhenDeleting() throws Exception {
         MvcResult resultWithWrondId = this.mockMvc.perform(
-            MockMvcRequestBuilders.delete("/api/delete/{id}", 99))
+            MockMvcRequestBuilders.delete("/api/delete/{id}", 99)
+            .with(SecurityMockMvcRequestPostProcessors.csrf()))
             .andExpect(status().isUnprocessableEntity()).andReturn();
         assertEquals("Not found", resultWithWrondId.getResponse().getContentAsString());
         
@@ -187,6 +200,7 @@ public class TodoControllerTest {
 
     private ResultActions addNewTodo(Todo todo) throws Exception {
         return this.mockMvc.perform(post(("/api/add-todo"))
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(todo)));
     }

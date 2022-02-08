@@ -28,8 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class TodoController {
 
-    @Autowired
-    private TodoRepository todoRepository;
 
     @Autowired
     private TodoService todoService;
