@@ -41,7 +41,7 @@ export class AuthService {
         this.authenticated = false;
         this.authorities = [];
         this.username = '';
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/login');
     })).subscribe();
   }
 }

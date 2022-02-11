@@ -31,7 +31,7 @@ public class DevSecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
 
         //Note this: disabling ensures using without csrf protection
-        //http.csrf().disable();
+        http.csrf().disable();
 
         http.headers().frameOptions().sameOrigin();
 
@@ -40,16 +40,21 @@ public class DevSecurityConfiguration extends WebSecurityConfigurerAdapter{
             .authorizeRequests()
             .antMatchers(
                 "/","/login","/index.html","/main*.js" ,"/polyfills*.js", "/runtime*.js",
-                "/vendor*.js", "/styles*.css", "/favicon.ico", "/logout"
+                "/vendor*.js", "/styles*.css", "/favicon.ico"
                 ).permitAll()
-            //.antMatchers(HttpMethod.GET, "/user").permitAll()
+            //.antMatchers(HttpMethod.POST, "/?logout").permitAll()
             .anyRequest().authenticated()
             .and()
             .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .and()
             .formLogin()
                 .loginPage("/")
-                .permitAll();
+                .permitAll()
+            .and()
+            .logout()
+            .deleteCookies("JSESSIONID", "XSRF-TOKEN")
+            .clearAuthentication(true)
+            .permitAll();
     }
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception{

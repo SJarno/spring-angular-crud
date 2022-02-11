@@ -15,8 +15,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   login() {
-    this.auth.authenticate(this.credentials, () => {
-      this.router.navigateByUrl("/todos");
+    this.auth.authenticate(this.credentials, (err?:any) => {
+      if (err) {
+        if (err.status == 401) {
+          console.error("Auth failed");
+        } else {
+          console.error(err.status);
+        }
+      } else {
+        this.router.navigateByUrl("/todos");
+      }
+      
     });
     return false;
   }
