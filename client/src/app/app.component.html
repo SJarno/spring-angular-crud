@@ -1,21 +1,10 @@
 <header>
-    <nav>
-        <h3>Some links here</h3>
-    </nav>
+    <app-navigation></app-navigation>
 </header>
 <main>
-    <section>
-        <h1>{{getGreeting()}}</h1>
-    </section>
-    <div class="form-and-list">
-        <app-add-todo-form></app-add-todo-form>
-        <!-- Details section here -->
-        <app-modify-todo></app-modify-todo>
-        <app-list-todos></app-list-todos>
-    </div>
-    <!-- Display messages for user -->
-    <app-messages></app-messages>
+    <router-outlet></router-outlet>
 </main>
+<app-messages></app-messages>
 <!-- <footer>
     <h3>Some info here</h3>
 </footer> -->

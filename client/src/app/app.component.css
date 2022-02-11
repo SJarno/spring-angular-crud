@@ -3,6 +3,8 @@ main {
    /*  margin: 0rem 1rem; */
     background-color: rgb(121, 110, 110);
     min-height: 100rem;
+    display: flex;
+    justify-content: center;
 }
 
 header {
@@ -13,24 +15,6 @@ nav {
     text-align: center;
 }
 
-div.form-and-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    
-}
-
-div.form-and-list > * {
-    flex-basis: 30%;
-}
-/* Details section: */
-div.todo-card {
-    border: 0.125rem solid black;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background-color: gainsboro;
-}
 
 h2 {
     /* background-color: beige; */

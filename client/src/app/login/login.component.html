@@ -1,21 +1,28 @@
 <section>
-    <form>
+    <form role="form" (submit)="login()">
         <table>
             <thead>
                 <tr>
-                    <th>Login</th>
+                    <th><h2>Login</h2></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>testi</td>
-                    <td>eka</td>
+                    <td><label for="username">Username: </label></td>
+                    <td><input type="text" id="username" name="username" 
+                        [(ngModel)]="credentials.username"></td>
                 </tr>
                 <tr>
-                    <td>testi</td>
-                    <td>toka</td>
+                    <td><label for="password">Password: </label></td>
+                    <td><input type="password" name="password" id="password"
+                        [(ngModel)]="credentials.password"></td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td><input type="submit" value="Login"></td>
+                </tr>
+            </tfoot>
         </table>
     </form>
 </section>

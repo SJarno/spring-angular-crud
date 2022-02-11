@@ -11,6 +11,8 @@ import { ListTodosComponent } from './list-todos/list-todos.component';
 import { ModifyTodoComponent } from './modify-todo/modify-todo.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { MainComponent } from './main/main.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { LoginComponent } from './login/login.component';
     ListTodosComponent,
     ModifyTodoComponent,
     MessagesComponent,
-    LoginComponent
+    LoginComponent,
+    NavigationComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
